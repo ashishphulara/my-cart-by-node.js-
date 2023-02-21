@@ -14,5 +14,15 @@ const verifyToken =(req ,res ,next)=>{
     }
 }
 
+const verifyTokenAuth = (req,res,next)=>{
+    verifyToken(req,res,()=>{
+        if(req.user.id=== req.params.id || req.user.isAdmin){
+            next()
+        }else{
+            res.status(403).json("Not allowed to use this functionality")
+        }
+    })
+}
 
-module.exports = {verifyToken};
+
+module.exports = {verifyToken ,verifyTokenAuth};
